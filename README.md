@@ -135,6 +135,17 @@ A machine can override any of them in `env.local.txt` (create it next to
 file - they belong in `tools/console-host.txt` and
 `controller-connection.json`.
 
+### Offline boot (no second machine)
+
+For a boot that needs no LAN after the card is copied by hand, put
+`console/n2h_rpc.lua`, `console/n2h_pump.lua` and `console/offline.lua` in the
+save data, the kaiHEN release in `kaihen/` and the tuning keys in
+`sd:/n2h/env.txt` on the SD card. The launcher loads the two lua files and
+`offline.lua` runs the four stages on the console alone: map check, FS
+acquisition (alias buckets from `env.txt`), heap/LOADER check, then the kaiHEN
+bootstrap through `ldr:ro`. Only the one-time file copy needs a computer; the
+TCP RPC loop is still there for a host that wants it, just never required.
+
 ## Writing a controller
 
 Any controller - Pico W, ESP32, a PC applet, a phone - can drive this, because
